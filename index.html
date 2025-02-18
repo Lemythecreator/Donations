@@ -61,5 +61,44 @@
             <button type="submit">Donate Now</button>
         </form>
     </div>
+
+    <script>
+        document.getElementById("donationForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Stop the page from refreshing
+
+            var formData = {
+                name: document.querySelector("[name='name']").value,
+                email: document.querySelector("[name='email']").value,
+                amount: document.querySelector("[name='amount']").value,
+                currency: document.querySelector("[name='currency']").value
+            };
+
+            fetch(https://script.google.com/macros/s/AKfycbzaxbj7JiBYM50NL5c5GPnpCEgvFij7FC6_MIFYDapnoEjNO-E4c4oeUQwgXmOwAckc/exec, { // Replace this with your real Google Apps Script URL
+                method: "POST",
+                body: JSON.stringify(formData),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.text()) // Wait for response
+            .then(data => {
+                alert("Donation submitted successfully!"); // Show success message
+                document.getElementById("donationForm").reset(); // Clear the form
+                showPaymentButton();
+            })
+            .catch(error => {
+                alert("Error submitting form.");
+            });
+        });
+
+        function showPaymentButton() {
+            var paymentButton = document.createElement("button");
+            paymentButton.textContent = "Proceed to Payment";
+            paymentButton.onclick = function() {
+                window.location.href = "https://your-payment-gateway.com"; // Replace with actual payment link
+            };
+            document.body.appendChild(paymentButton);
+        }
+    </script>
 </body>
 </html>
